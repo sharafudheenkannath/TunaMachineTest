@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.tuna_test.view.authentication.view.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_roomListFragment"
+            app:destination="@id/roomListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomListFragment"
+        android:name="com.example.tuna_test.view.listing.view.RoomListFragment"
+        android:label="RoomListFragment"
+        tools:layout="@layout/fragment_room_list">
+        <action
+            android:id="@+id/action_movieBookingFragment"
+            app:destination="@id/movieBookingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieBookingFragment"
+        android:name="com.example.tuna_test.view.booking.view.MovieBookingFragment"
+        android:label="MovieBookingFragment"
+        tools:layout="@layout/fragment_movie_booking">
+        <argument
+            android:name="movie_id"
+            app:argType="string" />
+    </fragment>
+</navigation>
