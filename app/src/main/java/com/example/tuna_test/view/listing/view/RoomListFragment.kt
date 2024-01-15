@@ -11,6 +11,7 @@ import com.example.tuna_test.R
 import com.example.tuna_test.base.BaseFragmentDataBinding
 import com.example.tuna_test.databinding.BottomSheetMovieDetailsBinding
 import com.example.tuna_test.databinding.FragmentRoomListBinding
+import com.example.tuna_test.util.DataResult
 import com.example.tuna_test.view.listing.adapter.MovieListAdapter
 import com.example.tuna_test.view.listing.model.EscapeRoomsMovy
 import com.example.tuna_test.view.listing.viewmodel.RoomListFragmentVM
@@ -42,14 +43,31 @@ class RoomListFragment : BaseFragmentDataBinding<FragmentRoomListBinding, RoomLi
     override fun getLayoutId(): Int = R.layout.fragment_room_list
 
     override fun initLayout() {
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
         binding.rvRoomList.adapter = adapter
     }
 
     override fun setupObservers() {
         vm.movieListResult.observe(viewLifecycleOwner) {
-            roomList.clear()
-            roomList.addAll(it)
-            adapter.notifyDataSetChanged()
+            when (it.status) {
+                DataResult.Status.SUCCESS -> {
+                    loader.hide()
+                    roomList.clear()
+                    roomList.addAll(it.data as ArrayList<EscapeRoomsMovy>)
+                    adapter.notifyDataSetChanged()
+                }
+
+                DataResult.Status.ERROR -> {
+                    loader.hide()
+                    showToast(it.message.toString())
+                }
+
+                DataResult.Status.LOADING -> {
+                    loader.show()
+                }
+            }
         }
         vm.navigateToBookingPage.observe(viewLifecycleOwner) {
             if (it) {
@@ -72,5 +90,6 @@ class RoomListFragment : BaseFragmentDataBinding<FragmentRoomListBinding, RoomLi
         bottomSheetBinding.executePendingBindings()
         bottomSheet.setContentView(bottomSheetBinding.root)
         bottomSheet.show()
+        bottomSheetBinding.ivClose.setOnClickListener { bottomSheet.dismiss() }
     }
 }

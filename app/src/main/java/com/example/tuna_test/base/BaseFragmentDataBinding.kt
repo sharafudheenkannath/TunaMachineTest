@@ -1,5 +1,6 @@
 package com.example.tuna_test.base
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,7 @@ abstract class BaseFragmentDataBinding<T : ViewDataBinding, V : ViewModel?> : Fr
     private var mViewModel: V? = null
     private var _binding: T? = null
     protected val binding get() = _binding!!
-    //protected lateinit var loader: LoadingIndicator
+    protected lateinit var loader: ProgressDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,7 @@ abstract class BaseFragmentDataBinding<T : ViewDataBinding, V : ViewModel?> : Fr
         binding.lifecycleOwner = viewLifecycleOwner
         binding.executePendingBindings()
 
-        //loader = LoadingIndicator(requireContext(), false)
+        loader = ProgressDialog(requireContext())
 
         initLayout()
     }

@@ -7,12 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tuna_test.R
 import com.example.tuna_test.databinding.RowShowDateBinding
+import com.example.tuna_test.view.booking.model.ShowTime
 
-class ShowDatesAdapter(private val context: Context, private val list: ArrayList<String>) :
+class ShowDatesAdapter(private val context: Context, private val list: ArrayList<ShowTime>) :
     RecyclerView.Adapter<ShowDatesAdapter.Holder>() {
     inner class Holder(binding: RowShowDateBinding) : RecyclerView.ViewHolder(binding.root) {
         private val itemBinding = binding
-        fun bind(itemPosition: Int, data: String) {
+        fun bind(itemPosition: Int, data: ShowTime) {
             itemBinding.data = data
             itemBinding.executePendingBindings()
         }

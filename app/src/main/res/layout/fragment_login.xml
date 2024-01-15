@@ -28,7 +28,34 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
+            android:id="@+id/btnSignIn"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button_green"
+            android:paddingHorizontal="10dp"
+            android:text="Sign In Now !"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@id/btnSignUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignUp"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_green"
+            android:paddingHorizontal="10dp"
+            android:text="Sign Up"
+            android:layout_marginBottom="30dp"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@id/btnGuest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGuest"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_green"
             android:onClick="@{() -> viewModel.loginGuest()}"

@@ -5,6 +5,7 @@ import com.example.tuna_test.base.BaseViewModel
 import com.example.tuna_test.model.GetGuestTokenReqModel
 import com.example.tuna_test.repository.TunaApiRepo
 import com.example.tuna_test.sharedPref.SharedPref
+import com.example.tuna_test.util.DataResult
 import com.example.tuna_test.util.SingleLiveEvent
 import com.example.tuna_test.view.authentication.model.LoginRequestModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginFragmentVM @Inject constructor(private val repo: TunaApiRepo) : BaseViewModel() {
-    val loginSuccess = SingleLiveEvent<Boolean>()
+    val loginSuccess = SingleLiveEvent<DataResult<Boolean>>()
 
     init {
         viewModelScope.launch {
@@ -26,13 +27,14 @@ class LoginFragmentVM @Inject constructor(private val repo: TunaApiRepo) : BaseV
     }
 
     fun loginGuest() {
+        loginSuccess.value = DataResult.loading()
         viewModelScope.launch {
             val data = LoginRequestModel("CI-tuna", "2", "", "2", "")
             val result = repo.login(data)
             if (result.isSuccessful) {
-                loginSuccess.value = result.body()!!.response == "success"
+                loginSuccess.value = DataResult.success(result.body()!!.response == "success")
             } else {
-                toastMessage.value = "Something went wrong !"
+                loginSuccess.value = DataResult.error("Something went wrong !")
             }
         }
     }

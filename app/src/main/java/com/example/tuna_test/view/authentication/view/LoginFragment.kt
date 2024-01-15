@@ -8,6 +8,7 @@ import com.example.tuna_test.BR
 import com.example.tuna_test.R
 import com.example.tuna_test.base.BaseFragmentDataBinding
 import com.example.tuna_test.databinding.FragmentLoginBinding
+import com.example.tuna_test.util.DataResult
 import com.example.tuna_test.view.authentication.viewmodel.LoginFragmentVM
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,8 +33,20 @@ class LoginFragment : BaseFragmentDataBinding<FragmentLoginBinding, LoginFragmen
 
     override fun setupObservers() {
         vm.loginSuccess.observe(viewLifecycleOwner) {
-            if (it) {
-                findNavController().navigate(LoginFragmentDirections.actionRoomListFragment())
+            when (it.status) {
+                DataResult.Status.SUCCESS -> {
+                    loader.hide()
+                    findNavController().navigate(LoginFragmentDirections.actionRoomListFragment())
+                }
+
+                DataResult.Status.ERROR -> {
+                    loader.hide()
+                    showToast(it.message.toString())
+                }
+
+                DataResult.Status.LOADING -> {
+                    loader.show()
+                }
             }
         }
         vm.toastMessage.observe(viewLifecycleOwner) {

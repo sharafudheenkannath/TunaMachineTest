@@ -7,18 +7,19 @@
 
         <variable
             name="data"
-            type="String" />
+            type="com.example.tuna_test.view.booking.model.ShowTime" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#939191"
+        android:background="#B8B7B7"
         android:paddingHorizontal="16dp"
         android:paddingVertical="6dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDay"
+            convertMovieShowDay="@{data.date}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/app_button"
@@ -29,6 +30,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDate"
+            convertMovieShowDate="@{data.date}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
